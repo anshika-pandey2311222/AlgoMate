@@ -1,70 +1,82 @@
-# Getting Started with Create React App
+# AlgoMate
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**AlgoMate** is a full-stack project that serves as a **DSA Helper platform**, featuring:  
 
-## Available Scripts
+- **Topic-wise notes** for Data Structures and Algorithms.  
+- **Online code compiler** for multiple languages.  
+- **AI-powered chatbot** to help users with coding queries.  
 
-In the project directory, you can run:
+This project is built for learning, practice, and interview preparation.
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 🛠 Features
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **DSA Notes:** Organized notes for Arrays, Linked Lists, Trees, Stacks, Recursion, Searching, Sorting, etc.  
+- **Compiler:** Run your code directly in the browser (supports Python, Java, C++, etc.).  
+- **Chatbot:** AI-powered assistant integrated to answer coding questions and guide users.  
+- **Modern UI:** Built with React and Tailwind CSS for a clean interface.  
+- **Backend:** Node.js or Python backend for chatbot and compiler functionalities.
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🏗 Tech Stack
 
-### `npm run build`
+- **Frontend:** React, Tailwind CSS, JavaScript  
+- **Backend:** Node.js / Python (FastAPI / Flask)  
+- **AI Chatbot:** Rasa / custom NLP models  
+- **Compiler Integration:** Online code execution APIs  
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🚀 Installation
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. **Clone the repo**
+```bash
+git clone https://github.com/anshika-pandey2311222/AlgoMate.git
+cd AlgoMate
+npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify) Backend Setup
 
-### `npm run eject`
+cd backend
+# Install dependencies
+pip install -r requirements.txt
+# or
+npm install
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Frontend Setup
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+cd frontend
+npm install
+npm start
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+Run the backend server
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# Python backend
+python app.py
+# or Node.js backend
+node server.js
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+🖥 Usage
 
-### Code Splitting
+Visit the frontend at http://localhost:3000
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Access notes, run code in the compiler, or chat with the AI assistant.
 
-### Analyzing the Bundle Size
+🔒 Environment Variables
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Make sure to create a .env file in the backend folder for API keys and sensitive data.
+Example:
 
-### Making a Progressive Web App
+API_KEY=your_api_key_here
+OTHER_SECRET=secret_value
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Advanced Configuration
+Note: .env is ignored in Git to prevent exposing sensitive information.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+📂 Folder Structure
+AlgoMate/
+├─ backend/         # Backend server & API logic
+├─ frontend/        # React frontend
+└─ README.md
