@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Menu, X } from "lucide-react";
 
-export default function Chatbot() {
+export default function Chatbot({ backendUrl }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [messages, setMessages] = useState([
     { role: "bot", text: "👋 Hello! How can I help you today?" },
@@ -15,7 +15,7 @@ export default function Chatbot() {
     setMessages(newMessages);
 
     try {
-      const response = await fetch("http://localhost:5000/chat", {
+      const response = await fetch(`${backendUrl}/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: input }),

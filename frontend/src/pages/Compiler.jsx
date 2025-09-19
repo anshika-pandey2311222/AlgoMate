@@ -2,7 +2,7 @@ import React, { useMemo, useState, useEffect } from "react";
 import Editor from "@monaco-editor/react";
 import axios from "axios";
 
-export default function Compiler() {
+export default function Compiler({ backendUrl }) {
   const [theme, setTheme] = useState("vs-dark");
   const [language, setLanguage] = useState("javascript");
   const [code, setCode] = useState("");
@@ -49,17 +49,17 @@ int main(){
     try {
       const langMap = { javascript: 63, python: 71, c: 50, cpp: 54, java: 62 };
 
-      const response = await axios.post("http://localhost:5000/compile", {
-  language_id: langMap[language],
-  source_code: code,
-  stdin: "" 
-});
+      const response = await axios.post(`${backendUrl}/compile`, {
+        language_id: langMap[language],
+        source_code: code,
+        stdin: ""
+      });
 
       setOutput(
         response.data.stdout ||
-          response.data.compile_output ||
-          response.data.stderr ||
-          "(no output)"
+        response.data.compile_output ||
+        response.data.stderr ||
+        "(no output)"
       );
     } catch (err) {
       setOutput(`❌ Error: ${err.message}`);
@@ -73,9 +73,7 @@ int main(){
 
   return (
     <div className="w-full min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 text-white">
-      {/* Main Layout */}
       <div className="mx-auto grid max-w-7xl grid-cols-1 md:grid-cols-2 gap-4 p-6">
-        {/* Editor Section */}
         <div className="rounded-2xl border border-neutral-700 bg-black/30 backdrop-blur-lg shadow-xl">
           <div className="flex items-center justify-between px-4 py-2 border-b border-neutral-700">
             <div className="flex items-center gap-3">
@@ -100,7 +98,6 @@ int main(){
               </button>
             </div>
 
-            {/* Run Button inside Compiler */}
             <button
               onClick={runCode}
               disabled={isRunning}
@@ -128,7 +125,6 @@ int main(){
           </div>
         </div>
 
-        {/* Output Section */}
         <div className="rounded-2xl border border-neutral-700 bg-black/30 backdrop-blur-lg shadow-xl">
           <div className="flex items-center justify-between border-b border-neutral-700 px-4 py-2">
             <h3 className="font-semibold text-lg">Output</h3>

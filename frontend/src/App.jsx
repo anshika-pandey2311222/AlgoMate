@@ -1,4 +1,4 @@
-import { Routes, Route, Link, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Arrays from "./pages/TopicNotes/Arrays";
@@ -14,10 +14,12 @@ import Recursion from "./pages/TopicNotes/Recursion";
 import Patterns from "./pages/Patterns";
 import Basics from "./pages/Basics";
 import Topics from "./pages/Topics";
-
 import InterviewPrep from "./pages/InterviewPrep";
 import FloatingChatbot from "./components/FloatingChatbot";
 import HuffmanEncoding from "./pages/TopicNotes/HuffmanEncoding";
+
+// Live backend URL
+const BACKEND_URL = "https://algomate-dsa-helper.up.railway.app";
 
 export default function App() {
   const location = useLocation();
@@ -30,26 +32,25 @@ export default function App() {
       {/* Routes */}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/array" element={<Arrays />} />
-        <Route path="/topics" element={<Topics/>} />
-        <Route path="/linkedlist" element={<LinkedList />} />
-        <Route path="/stack" element={<Stack />} />
-        <Route path="/searching" element={<Searching />} />
-        <Route path="/chatbot" element={<Chatbot />} />
-        <Route path="/compiler" element={<Compiler />} />
-        <Route path="/roadmap" element={<RoadmapPage />} />
-        <Route path="/HuffmanEncoding" element={<HuffmanEncoding />} />
-        <Route path="/Patterns" element={<Patterns />} />
-        <Route path="/EasyDSA" element={<EasyDSA />} />
-        <Route path="/Recursion" element={<Recursion />} />
-        <Route path="/Basics" element={<Basics />} />
-        <Route path="/InterviewPrep" element={<InterviewPrep />} />
-        <Route path="/trees" element={<Tree />} />
-
+        <Route path="/array" element={<Arrays backendUrl={BACKEND_URL} />} />
+        <Route path="/topics" element={<Topics backendUrl={BACKEND_URL} />} />
+        <Route path="/linkedlist" element={<LinkedList backendUrl={BACKEND_URL} />} />
+        <Route path="/stack" element={<Stack backendUrl={BACKEND_URL} />} />
+        <Route path="/searching" element={<Searching backendUrl={BACKEND_URL} />} />
+        <Route path="/chatbot" element={<Chatbot backendUrl={BACKEND_URL} />} />
+        <Route path="/compiler" element={<Compiler backendUrl={BACKEND_URL} />} />
+        <Route path="/roadmap" element={<RoadmapPage backendUrl={BACKEND_URL} />} />
+        <Route path="/HuffmanEncoding" element={<HuffmanEncoding backendUrl={BACKEND_URL} />} />
+        <Route path="/Patterns" element={<Patterns backendUrl={BACKEND_URL} />} />
+        <Route path="/EasyDSA" element={<EasyDSA backendUrl={BACKEND_URL} />} />
+        <Route path="/Recursion" element={<Recursion backendUrl={BACKEND_URL} />} />
+        <Route path="/Basics" element={<Basics backendUrl={BACKEND_URL} />} />
+        <Route path="/InterviewPrep" element={<InterviewPrep backendUrl={BACKEND_URL} />} />
+        <Route path="/trees" element={<Tree backendUrl={BACKEND_URL} />} />
       </Routes>
 
       {/* Floating Chatbot */}
-      <FloatingChatbot />
+      <FloatingChatbot backendUrl={BACKEND_URL} />
     </div>
   );
 }
