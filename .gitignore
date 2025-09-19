@@ -1,0 +1,16 @@
+# Node modules and frontend build
+node_modules/
+my-react-app/build/
+
+# Python cache and virtual env
+__pycache__/
+*.pyc
+rasa-env/
+.env
+
+# IDE / system files
+*.DS_Store
+*.vscode/
+dsa logo1.mhtml
+dsa logo2.mhtml
+package.zip
