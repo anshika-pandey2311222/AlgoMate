@@ -26,10 +26,8 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white relative">
-      {/* Navbar */}
       <Navbar />
 
-      {/* Routes */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/array" element={<Arrays backendUrl={BACKEND_URL} />} />
@@ -49,7 +47,6 @@ export default function App() {
         <Route path="/trees" element={<Tree backendUrl={BACKEND_URL} />} />
       </Routes>
 
-      {/* Floating Chatbot */}
       <FloatingChatbot backendUrl={BACKEND_URL} />
     </div>
   );
