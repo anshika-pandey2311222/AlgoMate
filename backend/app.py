@@ -1,59 +1,64 @@
-import os
-import requests
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from dotenv import load_dotenv
-
-load_dotenv()
+import requests
+import os
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})
 
-API_KEY = os.getenv("GEMINI_API_KEY")
-MODEL = "gemini-1.5-flash"
-API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL}:generateContent?key={API_KEY}"
+# Allow CORS from your frontend domain
+CORS(app, origins=["https://algomate-production.up.railway.app"])
 
-def ask_gemini(prompt):
-    payload = {"contents": [{"parts": [{"text": prompt}]}]}
-    try:
-        response = requests.post(API_URL, json=payload)
-        if response.status_code == 200:
-            data = response.json()
-            return data.get("candidates", [{}])[0].get("content", {}).get("parts", [{}])[0].get("text", "No response")
-        else:
-            return f"Error {response.status_code}: {response.text}"
-    except Exception as e:
-        return f"Request failed: {str(e)}"
+# Load API keys from environment
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+JUDGE0_API_KEY = os.getenv("JUDGE0_API_KEY")
 
+# ----------------- Chatbot Endpoint -----------------
 @app.route("/chat", methods=["POST"])
 def chat():
-    user_input = request.json.get("message", "")
-    if not user_input:
-        return jsonify({"error": "No message provided"}), 400
-    bot_response = ask_gemini(user_input)
+    data = request.get_json()
+    user_message = data.get("message", "")
+
+    # Example: call your Gemini/AI API here
+    # Replace the URL and payload with your actual Gemini API call
+    headers = {"Authorization": f"Bearer {GEMINI_API_KEY}"}
+    payload = {"prompt": user_message}
+
+    try:
+        resp = requests.post("https://api.gemini.example/v1/generate", json=payload, headers=headers)
+        result = resp.json()
+        bot_response = result.get("text", "Sorry, I couldn't process that.")
+    except Exception as e:
+        bot_response = f"Error: {str(e)}"
+
     return jsonify({"response": bot_response})
 
-JUDGE0_URL = "https://judge0-ce.p.rapidapi.com/submissions?base64_encoded=false&wait=true"
-JUDGE0_HEADERS = {
-    "X-RapidAPI-Host": "judge0-ce.p.rapidapi.com",
-    "X-RapidAPI-Key": os.getenv("JUDGE0_API_KEY"), 
-    "Content-Type": "application/json"
-}
-
+# ----------------- Compiler Endpoint -----------------
 @app.route("/compile", methods=["POST"])
 def compile_code():
-    try:
-        data = request.json
-        payload = {
-            "language_id": data.get("language_id"),
-            "source_code": data.get("source_code"),
-            "stdin": data.get("stdin", "")
-        }
+    data = request.get_json()
+    language_id = data.get("language_id")
+    source_code = data.get("source_code")
+    stdin = data.get("stdin", "")
 
-        res = requests.post(JUDGE0_URL, headers=JUDGE0_HEADERS, json=payload)
-        return jsonify(res.json()), res.status_code
+    headers = {"X-RapidAPI-Key": JUDGE0_API_KEY}
+    payload = {
+        "language_id": language_id,
+        "source_code": source_code,
+        "stdin": stdin
+    }
+
+    try:
+        resp = requests.post("https://judge0.p.rapidapi.com/submissions", json=payload, headers=headers)
+        result = resp.json()
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        result = {"stderr": str(e)}
+
+    return jsonify(result)
+
+@app.route("/health", methods=["GET"])
+def health():
+    return jsonify({"status": "ok"})
 
 if __name__ == "__main__":
-    app.run(port=5000, debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
