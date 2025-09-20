@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Menu, X } from "lucide-react";
 
-export default function Chatbot({ backendUrl }) {
+export default function Chatbot() {
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [messages, setMessages] = useState([{ role: "bot", text: "👋 Hello! How can I help you today?" }]);
   const [input, setInput] = useState("");
@@ -21,7 +23,6 @@ export default function Chatbot({ backendUrl }) {
       const data = await response.json();
       setMessages(prev => [...prev, { role: "bot", text: data.response }]);
     } catch (error) {
-      console.error("Error:", error);
       setMessages(prev => [...prev, { role: "bot", text: "⚠️ Error fetching response." }]);
     }
 
@@ -30,7 +31,6 @@ export default function Chatbot({ backendUrl }) {
 
   return (
     <div className="flex h-[calc(100vh-64px)] bg-black text-gray-300">
-      {/* Sidebar */}
       <div className={`fixed top-[64px] left-0 h-[calc(100vh-64px)] w-64 bg-gray-900 border-r border-gray-800 transform ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} transition-transform duration-300 ease-in-out z-20`}>
         <div className="flex items-center justify-between p-4 border-b border-gray-700">
           <h2 className="text-lg font-semibold text-[#00FFFF]">Menu</h2>
@@ -43,7 +43,6 @@ export default function Chatbot({ backendUrl }) {
         </ul>
       </div>
 
-      {/* Main Chat Area */}
       <div className="flex flex-col flex-1">
         <div className="flex items-center justify-between bg-gray-900 border-b border-gray-800 p-4 shadow-sm">
           <button onClick={() => setSidebarOpen(true)}><Menu className="w-6 h-6 text-[#00FFFF]" /></button>

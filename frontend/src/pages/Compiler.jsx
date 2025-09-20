@@ -2,7 +2,9 @@ import React, { useMemo, useState, useEffect } from "react";
 import Editor from "@monaco-editor/react";
 import axios from "axios";
 
-export default function Compiler({ backendUrl }) {
+export default function Compiler() {
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
   const [theme, setTheme] = useState("vs-dark");
   const [language, setLanguage] = useState("javascript");
   const [code, setCode] = useState("");
@@ -27,18 +29,13 @@ export default function Compiler({ backendUrl }) {
 
     try {
       const langMap = { javascript: 63, python: 71, c: 50, cpp: 54, java: 62 };
-
       const response = await axios.post(`${backendUrl}/compile`, {
         language_id: langMap[language],
         source_code: code,
         stdin: ""
       });
-
       setOutput(
-        response.data.stdout ||
-        response.data.compile_output ||
-        response.data.stderr ||
-        "(no output)"
+        response.data.stdout || response.data.compile_output || response.data.stderr || "(no output)"
       );
     } catch (err) {
       setOutput(`❌ Error: ${err.message}`);
@@ -47,8 +44,7 @@ export default function Compiler({ backendUrl }) {
     }
   };
 
-  const toggleTheme = () =>
-    setTheme(prev => (prev === "vs-dark" ? "light" : "vs-dark"));
+  const toggleTheme = () => setTheme(prev => (prev === "vs-dark" ? "light" : "vs-dark"));
 
   return (
     <div className="w-full min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 text-white">
@@ -77,7 +73,7 @@ export default function Compiler({ backendUrl }) {
               theme={theme}
               language={language === "cpp" ? "cpp" : language}
               value={code}
-              onChange={(value) => setCode(value ?? "")}
+              onChange={v => setCode(v ?? "")}
               options={{ fontSize: 16, minimap: { enabled: false }, fontLigatures: true, scrollBeyondLastLine: false, tabSize: 2 }}
             />
           </div>
