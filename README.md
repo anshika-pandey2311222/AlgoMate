@@ -24,7 +24,7 @@ This project is built for learning, practice, and interview preparation.
 
 - **Frontend:** React, Tailwind CSS, JavaScript  
 - **Backend:** Node.js / Python (FastAPI / Flask)  
-- **AI Chatbot:** Rasa / custom NLP models  
+- **AI Chatbot:** gemini API 
 - **Compiler Integration:** Online code execution APIs  
 
 ---
