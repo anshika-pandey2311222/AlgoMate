@@ -25,7 +25,7 @@ def ask_gemini(prompt):
                 .get("text", "⚠️ Empty response from Gemini.")
             )
         else:
-            return f"⚠️ Error {response.status_code}: {response.text}"
+            return f"⚠️ Error! WAIT MY DEVELOPER IS FIXING ME {response.status_code}: {response.text}"
     except Exception as e:
         return f"⚠️ Request failed: {str(e)}"
 
