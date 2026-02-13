@@ -18,8 +18,8 @@ import InterviewPrep from "./pages/InterviewPrep";
 import FloatingChatbot from "./components/FloatingChatbot";
 import HuffmanEncoding from "./pages/TopicNotes/HuffmanEncoding";
 
-// Live backend URL
-const BACKEND_URL = "https://algomate-dsa-helper.up.railway.app";
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 export default function App() {
   const location = useLocation();
