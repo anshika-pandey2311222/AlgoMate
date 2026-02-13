@@ -1,54 +1,64 @@
+from flask import Blueprint, request, jsonify
 import requests
-from flask import Flask, request, jsonify
-from flask_cors import CORS
+import os
+from dotenv import load_dotenv
 
-app = Flask(__name__)
-CORS(app, resources={r"/chat": {"origins": "*"}})
+# Load environment variables
+load_dotenv()
 
-API_KEY = "YOUR_API_KEY"
-MODEL = "gemini-1.5-flash"
-API_URL = f"https://generativelanguage.googleapis.com/v1/models/{MODEL}:generateContent?key={API_KEY}"
+# ✅ DEFINE BLUEPRINT FIRST
+chat_bp = Blueprint("chat_bp", __name__)
+
+# Get API key
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 
-def ask_gemini(prompt):
+# ---------------- HEALTH ROUTE ----------------
+@chat_bp.route("/health", methods=["GET"])
+def health():
+    return jsonify({"status": "ok"}), 200
+
+
+# ---------------- CHAT ROUTE ----------------
+@chat_bp.route("/chat", methods=["POST"])
+def chat():
+    data = request.get_json()
+    user_message = data.get("message", "")
+
+    if not user_message:
+        return jsonify({"error": "Message is required"}), 400
+
+    if not GEMINI_API_KEY:
+        return jsonify({"error": "GEMINI_API_KEY not set"}), 500
+
+    url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent"
+
     payload = {
-        "contents": [{"parts": [{"text": prompt}]}]
+        "contents": [
+            {
+                "parts": [
+                    {"text": user_message}
+                ]
+            }
+        ]
     }
 
     try:
-        response = requests.post(API_URL, json=payload, timeout=10)
-
-        if response.status_code != 200:
-            return "🤖 I'm currently being fixed by my developer. Please try again shortly."
-
-        data = response.json()
-
-        text = (
-            data.get("candidates", [{}])[0]
-            .get("content", {})
-            .get("parts", [{}])[0]
-            .get("text")
+        response = requests.post(
+            url,
+            params={"key": GEMINI_API_KEY},
+            json=payload,
+            timeout=30
         )
 
-        if not text:
-            return "🤖 I'm temporarily unavailable and being improved. Please try again in a moment."
+        result = response.json()
 
-        return text
+        if "candidates" not in result:
+            return jsonify({"error_from_gemini": result}), 500
 
-    except requests.exceptions.RequestException:
-        return "🤖 I'm currently under maintenance. Please try again soon."
+        reply = result["candidates"][0]["content"]["parts"][0]["text"]
 
+        return jsonify({"response": reply}), 200
 
-@app.route("/chat", methods=["POST"])
-def chat():
-    user_input = request.json.get("message", "")
-
-    if not user_input:
-        return jsonify({"reply": "⚠️ No message provided"}), 400
-
-    bot_response = ask_gemini(user_input)
-    return jsonify({"reply": bot_response})
-
-
-if __name__ == "__main__":
-    app.run(port=5000, debug=True)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
