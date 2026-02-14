@@ -1,5 +1,7 @@
 # AlgoMate
 
+**run live** https://algomate-yhqd.onrender.com/
+
 **AlgoMate** is a full-stack project that serves as a **DSA Helper platform**, featuring:  
 
 - **Topic-wise notes** for Data Structures and Algorithms.  
