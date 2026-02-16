@@ -3,54 +3,48 @@ from flask_cors import CORS
 import requests
 import os
 
-def create_app():
-    app = Flask(__name__)
+app = Flask(__name__)
 
-    # Enable CORS
-    CORS(app, origins="*")
+# Allow frontend domain (change later to your actual frontend URL)
+CORS(app, origins="*")
 
-    # =============================
-    # Compiler Route
-    # =============================
-    @app.route("/compile", methods=["POST"])
-    def compile_code():
-        try:
-            data = request.get_json()
+@app.route("/")
+def home():
+    return "AlgoMate Compiler API is running 🚀"
 
-            language_id = data.get("language_id")
-            source_code = data.get("source_code")
-            stdin = data.get("stdin", "")
+@app.route("/compile", methods=["POST"])
+def compile_code():
+    try:
+        data = request.get_json()
 
-            if not language_id or not source_code:
-                return jsonify({"error": "Missing language_id or source_code"}), 400
+        language_id = data.get("language_id")
+        source_code = data.get("source_code")
+        stdin = data.get("stdin", "")
 
-            url = "https://judge0-ce.p.rapidapi.com/submissions?base64_encoded=false&wait=true"
+        if not language_id or not source_code:
+            return jsonify({"error": "Missing language_id or source_code"}), 400
 
-            payload = {
-                "language_id": language_id,
-                "source_code": source_code,
-                "stdin": stdin
-            }
+        url = "https://judge0-ce.p.rapidapi.com/submissions?base64_encoded=false&wait=true"
 
-            headers = {
-                "content-type": "application/json",
-                "X-RapidAPI-Key": os.getenv("RAPIDAPI_KEY"),
-                "X-RapidAPI-Host": "judge0-ce.p.rapidapi.com"
-            }
+        payload = {
+            "language_id": language_id,
+            "source_code": source_code,
+            "stdin": stdin
+        }
 
-            response = requests.post(url, json=payload, headers=headers)
-            result = response.json()
+        headers = {
+            "content-type": "application/json",
+            "X-RapidAPI-Key": os.environ.get("RAPIDAPI_KEY"),
+            "X-RapidAPI-Host": "judge0-ce.p.rapidapi.com"
+        }
 
-            return jsonify(result)
+        response = requests.post(url, json=payload, headers=headers)
+        return jsonify(response.json())
 
-        except Exception as e:
-            return jsonify({"error": str(e)}), 500
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
-    return app
-
-
-app = create_app()
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port, debug=True)
+    port = int(os.environ.get("PORT", 10000))  # Render uses 10000
+    app.run(host="0.0.0.0", port=port)
