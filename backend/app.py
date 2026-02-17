@@ -6,7 +6,7 @@ import os
 
 app = Flask(__name__)
 
-# Allow frontend access
+# Allow frontend requests
 CORS(app, origins="*")
 
 # Register chatbot blueprint
@@ -14,8 +14,7 @@ app.register_blueprint(chat_bp)
 
 JUDGE0_API_KEY = os.getenv("JUDGE0_API_KEY")
 
-
-# ---------------- COMPILER ROUTE ----------------
+# ---------------- COMPILER ----------------
 @app.route("/compile", methods=["POST"])
 def compile_code():
     data = request.get_json()
