@@ -1,15 +1,9 @@
 from flask import Blueprint, request, jsonify
 import requests
 import os
-from dotenv import load_dotenv
 
-# Load environment variables
-load_dotenv()
-
-# ✅ DEFINE BLUEPRINT FIRST
 chat_bp = Blueprint("chat_bp", __name__)
 
-# Get API key
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 
@@ -31,15 +25,11 @@ def chat():
     if not GEMINI_API_KEY:
         return jsonify({"error": "GEMINI_API_KEY not set"}), 500
 
-    url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent"
+    url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
 
     payload = {
         "contents": [
-            {
-                "parts": [
-                    {"text": user_message}
-                ]
-            }
+            {"parts": [{"text": user_message}]}
         ]
     }
 
