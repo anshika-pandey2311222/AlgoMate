@@ -6,13 +6,6 @@ chat_bp = Blueprint("chat_bp", __name__)
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
-# ---------------- HEALTH ----------------
-@chat_bp.route("/health", methods=["GET"])
-def health():
-    return jsonify({"status": "ok"}), 200
-
-
-# ---------------- CHAT ----------------
 @chat_bp.route("/chat", methods=["POST"])
 def chat():
     data = request.get_json()
