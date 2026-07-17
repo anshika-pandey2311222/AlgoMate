@@ -1,5 +1,6 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import DSATracker from "./pages/DSATracker";
 import Home from "./pages/Home";
 import Arrays from "./pages/TopicNotes/Arrays";
 import LinkedList from "./pages/TopicNotes/LinkedLists";
@@ -30,6 +31,7 @@ export default function App() {
 
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/dsa-tracker" element={<DSATracker />} />
         <Route path="/array" element={<Arrays backendUrl={BACKEND_URL} />} />
         <Route path="/topics" element={<Topics backendUrl={BACKEND_URL} />} />
         <Route path="/linkedlist" element={<LinkedList backendUrl={BACKEND_URL} />} />

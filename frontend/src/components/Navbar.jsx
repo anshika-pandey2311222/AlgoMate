@@ -23,6 +23,7 @@ function Navbar() {
 
         {/* Links */}
         <div className="space-x-6 text-lg flex flex-wrap">
+          <NavLink to="/dsa-tracker">DSA Tracker</NavLink>
           <NavLink to="/" className={linkClasses}>Home</NavLink>
           <NavLink to="/topics" className={linkClasses}>Topics</NavLink>
           <NavLink to="/array" className={linkClasses}>Array</NavLink>
@@ -36,6 +37,7 @@ function Navbar() {
           <NavLink to="/Recursion" className={linkClasses}>Recursion</NavLink>
           <NavLink to="/HuffmanEncoding" className={linkClasses}>HuffmanEncoding</NavLink>
           <NavLink to="/InterviewPrep" className={linkClasses}>Interview</NavLink>
+          
         </div>
       </nav>
 
