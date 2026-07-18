@@ -5,7 +5,7 @@ const notesData = {
   ],
   LinkedList: [
     { title: "Intro to Linked List", content: "Each node points to the next..." },
-    { title: "Types", content: "Singly, Doubly, and Circular Linked Lists..." },
+    { title: "Types", content: "Singly, Doubly, and Circular Linked Lists, circular doubly linked list" },
   ],
   Tree: [
     { title: "Binary Tree Basics", content: "A tree where each node has ≤ 2 children..." },
